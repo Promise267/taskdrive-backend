@@ -2,7 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const Router = require("./routes/router");
+const cardRouter = require("./routes/card");
+const collectionRouter = require("./routes/collection");
 
 mongoose.connect(process.env.URI);
 
@@ -19,7 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-app.use("/", Router);
+app.use("/", cardRouter);
+app.use("/collection", collectionRouter);
 
 app.use((req, res, next) => {
     res.status(404).json({ error: 'Not Found' });
